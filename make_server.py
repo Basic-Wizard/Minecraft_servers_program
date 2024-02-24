@@ -2,15 +2,29 @@
 
 import os
 import requests
+import argparse
+
+
+def get_args():
+    parser = argparse.ArgumentParser(description="generate new minecraft servers")
+    parser.add_argument("-dir", help="directory in witch to store the server", type=str, required = True)
+    parser.add_argument("-url", help="url to download a server", type=str, required = True)
+    parser.add_argument("-n", help="name of server", type=str, required = True)
+    return parser.parse_args()
+
+parameters = get_args()
+dir = parameters.dir
+url = parameters.url
+name = parameters.n
 
 # Configuration
-server_dir = 'test_servers/test_server_1'
-server_jar_url = 'https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar'
-server_jar_name = 'minecraft_server.jar'
+# server_dir = 'test_servers/test_server_1'
+# server_jar_url = 'https://piston-data.mojang.com/v1/objects/8dd1a28015f51b1803213892b50b7b4fc76e594d/server.jar'
+# server_jar_name = 'minecraft_server.jar'
 
 # Ensure server directory exists
-if not os.path.exists(server_dir):
-    os.makedirs(server_dir)
+if not os.path.exists(dir):
+    os.makedirs(dir)
 
 # Download Minecraft server JAR
 def download_server_jar(url, save_path):
@@ -80,13 +94,13 @@ def accept_eula(path):
 # Main function to setup Minecraft server
 def setup_minecraft_server():
     # Download server JAR
-    download_server_jar(server_jar_url, os.path.join(server_dir, server_jar_name))
+    download_server_jar(url, os.path.join(dir, name))
     
     # Generate server.properties
-    generate_properties_file(os.path.join(server_dir, 'server.properties'))
+    generate_properties_file(os.path.join(dir, 'server.properties'))
     
     # Accept EULA
-    accept_eula(os.path.join(server_dir, 'eula.txt'))
+    accept_eula(os.path.join(dir, 'eula.txt'))
 
 if __name__ == '__main__':
     setup_minecraft_server()

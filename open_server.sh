@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# # Define the custom screen socket directory
+# export SCREENDIR=../socketdir
+
 # Configuration
-SERVER_DIRECTORY="test_servers/test_server_1"
+SERVER_DIRECTORY="servers/test_gui"
 SERVER_JAR="minecraft_server.jar"
 SCREEN_NAME="MinecraftServer" # The name of the screen session used to run the server in the background.
 MEMORY="2048M" # The amount of memory allocated to the Minecraft server. Adjust as necessary.
@@ -17,7 +20,7 @@ start_server() {
     else
         echo "Starting server..."
         # Starts the server in a detached screen session with the specified name and memory allocation.
-        screen -dmS $SCREEN_NAME java -Xmx$MEMORY -Xms$MEMORY -jar $SERVER_JAR nogui
+        screen -dmS $SCREEN_NAME java -Xmx$MEMORY -Xms$MEMORY -jar $SERVER_JAR #nogui
         echo "Server started." # Confirms that the server has been started.
     fi
 }
